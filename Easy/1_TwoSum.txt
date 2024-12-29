@@ -1,0 +1,71 @@
+*************************************************************************************
+
+https://leetcode.com/problems/two-sum/description/
+
+*************************************************************************************
+
+
+############################################
+
+Brute Force Approach:
+
+The brute force approach involves checking all possible pairs of numbers in the array to see if they add up to the target sum. 
+Here's the code for the brute force approach:
+
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        int n = nums.size();
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = i + 1; j < n; j++) {
+                if (nums[i] + nums[j] == target) {
+                    return {i, j};
+                }
+            }
+        }
+        return {};
+    }
+};
+
+Time Complexity:
+The time complexity of this approach is O(n^2) because we have two nested loops, each iterating through the array.
+Space Complexity:
+The space complexity is O(1) because we are not using any extra space that scales with the input size.
+
+################################################
+
+Optimal Approach :
+The optimal approach uses a hash map to store the numbers and their indices as we iterate through the array. This allows us to check if the complement of the current number (i.e., target - nums[i]) exists in the hash map in constant time.
+
+Here's the code for the optimal approach:
+
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        unordered_map<int, int> num_map;
+        for (int i = 0; i < nums.size(); i++) {
+            int complement = target - nums[i];
+            if (num_map.find(complement) != num_map.end()) {
+                return {num_map[complement], i};
+            }
+            num_map[nums[i]] = i;
+        }
+        return {};
+    }
+};
+
+Time Complexity
+The time complexity of this approach is O(n) because we only iterate through the array once, and each lookup in the hash map is O(1) on average.
+Space Complexity
+The space complexity is O(n) because we are storing up to n elements in the hash map.
+
+#######################################################################################
+
+
+Intuition for Reducing Complexity
+The intuition behind reducing the complexity is to avoid the nested loops by using additional space (a hash map) to store the elements we have seen so far. This allows us to check for the complement of the current element in constant time, thus reducing the overall time complexity from O(n^2) to O(n).
+
+By using a hash map, we trade off space for time, which is often a worthwhile trade-off in problems like this where the input size can be large. This approach ensures that we can find the solution in linear time while using linear space.
+
+
+##############################################################
